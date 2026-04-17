@@ -139,6 +139,9 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = "You must agree to the terms";
     }
+    if (!formData.pageName.trim()) {
+      newErrors.pageName = "Page name is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -238,11 +241,14 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
             <div>
               <input
                 type="text"
-                placeholder="Page Name (Optional)"
+                placeholder="Page Name"
                 value={formData.pageName}
                 onChange={(e) => handleChange("pageName", e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
+                className={`w-full rounded-lg border px-3 py-2.5 text-sm ${
+                  errors.pageName ? "border-red-500" : "border-slate-300"
+                }`}
               />
+              {errors.pageName && <p className="mt-1 text-xs text-red-500">{errors.pageName}</p>}
             </div>
 
             <div className="flex gap-2">
